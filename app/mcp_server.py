@@ -161,29 +161,10 @@ async def _execute_tool(
     return json.dumps(payload.model_dump(), indent=2)
 
 
-@mcp.tool(
-    name="x402.agent_card",
-    title="A2A Agent ID Card",
-    description=(
-        "Return the A2A Protocol v1.0 Agent ID Card and MCP server card. "
-        "Optional target_id filters to a skill id, name, or tag."
-    ),
-    annotations=READONLY,
-)
-async def get_agent_card(
-    target_id: Desc[
-        str | None,
-        Field(
-            description=(
-                "Optional skill ID, tool name, or tag to inspect. "
-                "Omit for the full server agent card."
-            ),
-        ),
-    ] = None,
-    agent_id: Desc[
-        str | None,
-        Field(description="Optional calling agent identifier for quota tracking."),
-    ] = None,
+async def _get_agent_card_payload(
+    tool_name: str,
+    target_id: str | None,
+    agent_id: str | None,
 ) -> str:
     from app.agent_surface import agent_card, mcp_server_card
 
@@ -215,10 +196,64 @@ async def get_agent_card(
         }
 
     return await _execute_tool(
-        "x402.agent_card",
+        tool_name,
         agent_id,
         lambda resolved: _sync_result(_build_card(resolved)),
     )
+
+
+@mcp.tool(
+    name="x402.agent_card",
+    title="A2A Agent ID Card",
+    description=(
+        "Return the A2A Protocol v1.0 Agent ID Card and MCP server card. "
+        "Optional target_id filters to a skill id, name, or tag."
+    ),
+    annotations=READONLY,
+)
+async def get_agent_card(
+    target_id: Desc[
+        str | None,
+        Field(
+            description=(
+                "Optional skill ID, tool name, or tag to inspect. "
+                "Omit for the full server agent card."
+            ),
+        ),
+    ] = None,
+    agent_id: Desc[
+        str | None,
+        Field(description="Optional calling agent identifier for quota tracking."),
+    ] = None,
+) -> str:
+    return await _get_agent_card_payload("x402.agent_card", target_id, agent_id)
+
+
+@mcp.tool(
+    name="get_agent_card",
+    title="A2A Agent ID Card",
+    description=(
+        "Legacy compatibility alias for x402.agent_card. "
+        "Returns the A2A Protocol v1.0 Agent ID Card and MCP server card."
+    ),
+    annotations=READONLY,
+)
+async def get_agent_card_legacy(
+    target_id: Desc[
+        str | None,
+        Field(
+            description=(
+                "Optional skill ID, tool name, or tag to inspect. "
+                "Omit for the full server agent card."
+            ),
+        ),
+    ] = None,
+    agent_id: Desc[
+        str | None,
+        Field(description="Optional calling agent identifier for quota tracking."),
+    ] = None,
+) -> str:
+    return await _get_agent_card_payload("get_agent_card", target_id, agent_id)
 
 
 @mcp.tool(

@@ -1,4 +1,4 @@
-"""Payment rail catalog — Stripe primary, x402/Coinbase alternate."""
+"""Payment rail catalog surfaced by the manifest, pricing table, and /upgrade."""
 
 from __future__ import annotations
 
@@ -8,6 +8,13 @@ from app.config import settings
 def build_payment_rails() -> dict:
     """Document available payment rails for manifest and /upgrade."""
     return {
+        "stripe": {
+            "primary": True,
+            "description": "Fiat checkout rail for Pro upgrades and MCP tool-credit packs",
+            "checkout_path": "/stripe/checkout",
+            "webhook_path": "/stripe/webhook",
+            "configured": bool(getattr(settings, "stripe_secret_key", None)),
+        },
         "x402_coinbase": {
             "primary": True,
             "description": (
