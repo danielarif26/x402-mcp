@@ -97,7 +97,7 @@ def _facilitator_client(network: str | None = None):
             {"url": settings.cdp_facilitator_url, "create_headers": create_headers}
         )
 
-    return HTTPFacilitatorClient()
+    return HTTPFacilitatorClient({"url": settings.x402_facilitator_url})
 
 
 def _probe_http_client():
