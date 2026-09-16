@@ -40,7 +40,7 @@ Use public issue data only (no wallet spend required):
 
 ```bash
 curl -s "https://api.github.com/repos/kwizzlesurp10-ctrl/x402-mcp/issues?state=all&labels=sale&per_page=100" > /tmp/sale_issues.json
-jq -r '.[] | [.number, .created_at, .title] | @tsv' /tmp/sale_issues.json
+jq -r '.[] | [.number, .created_at, .title, .body] | @tsv' /tmp/sale_issues.json
 ```
 
 Then:
