@@ -52,7 +52,7 @@ Then:
 
 1. Determine period membership from issue `created_at` to keep snapshots comparable.
 2. Read `Amount` and `From` fields from each issue body.
-3. Sum amounts for `gross USDC`, count distinct `From` wallets for `unique paying wallets`.
+3. Sum amounts for `gross USDC`, and count `unique paying wallets` by deduplicating `From` across all included issues (example: multiple `0xc22c17fc…` payments still count as one wallet).
 4. If settlement-failure or endpoint-attribution fields are absent in public issue bodies, report `unknown`.
 
 ## Calculation detail (30d window)
