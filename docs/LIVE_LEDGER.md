@@ -4,11 +4,11 @@ As of 2026-09-16 UTC, this ledger is seeded from public `sale` issues only becau
 
 Update rule (add-only): append a new dated snapshot section for each future update, and keep one source per snapshot (do not mix issue-derived and ledger-derived totals within the same period row). Historical snapshots stay frozen (never recompute an older snapshot from a different source).
 
-## Summary table (publicly verifiable)
+## Summary table (issue-created windows, publicly verifiable)
 
-Period basis for this snapshot: issue `created_at` proxy (not exact on-chain settlement timestamp).
+Important: these are issue-created windows, not settlement-window ledger snapshots.
 
-| period | gross USDC to payTo (on-chain + sale-watch issues) | unique paying wallets | settlement failures if known | top paid endpoints if known |
+| period (issue-created window) | gross USDC to payTo (on-chain + sale-watch issues) | unique paying wallets | settlement failures if known | top paid endpoints if known |
 |---|---:|---:|---|---|
 | trailing 7d | 0.00 | 0 | unknown (no public failure log visible here) | unknown |
 | trailing 30d | 1.75 | 8 | unknown (no public failure log visible here) | unknown |
