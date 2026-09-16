@@ -40,9 +40,13 @@ Important: these are issue-created windows, not settlement-window ledger snapsho
 Use public issue data only (no wallet spend required):
 
 ```bash
-curl -s "https://api.github.com/repos/kwizzlesurp10-ctrl/x402-mcp/issues?state=all&labels=sale&per_page=100" > sale_issues.json
-jq -r '.[] | [.number, .created_at, .title, .body] | @tsv' sale_issues.json
+for p in 1 2 3; do
+  curl -s "https://api.github.com/repos/kwizzlesurp10-ctrl/x402-mcp/issues?state=all&labels=sale&per_page=100&page=${p}" > "sale_issues_page_${p}.json"
+done
+jq -r '.[] | [.number, .created_at, .title, .body] | @tsv' sale_issues_page_*.json
 ```
+
+Increase page range (or follow GitHub `Link` headers) if `sale` issue count exceeds fetched pages.
 
 Then:
 
