@@ -1,6 +1,6 @@
 # LIVE_LEDGER
 
-As of 2026-09-16 UTC, this ledger is seeded from public `sale` issues only because live `/ledger/revenue` was not readable from this environment at authoring time. This snapshot uses issue `created_at` as a period proxy because BaseScan timestamps were not machine-read in this environment.
+As of 2026-09-16 UTC, this ledger is seeded from public `sale` issues only because live `/ledger/revenue` was not readable from this environment at authoring time. Snapshot windowing in this file uses issue `created_at` for period membership.
 
 Update rule (add-only): append a new dated snapshot section for each future update, and keep one source per snapshot (do not mix issue-derived and ledger-derived totals within the same period row). Historical snapshots stay frozen (never recompute an older snapshot from a different source).
 
@@ -25,7 +25,7 @@ Update rule (add-only): append a new dated snapshot section for each future upda
   - [#526](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/526) — $0.0100 USDC, `0x7ef12be6…`, BaseScan tx `0x87811a9be488a36e8334e309672e9792cc0086afe10fe370c89a374ed41cda97`
 - Complete 18-issue set used for trailing-30d is listed in **Calculation detail (30d window)** below.
 - The `$0.01 × 15` line item in trailing-30d consists of these 15 `sale` issues: [#480](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/480), [#481](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/481), [#484](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/484), [#488](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/488), [#489](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/489), [#490](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/490), [#491](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/491), [#492](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/492), [#499](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/499), [#500](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/500), [#502](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/502), [#503](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/503), [#522](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/522), [#523](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/523), and [#526](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/526).
-- If `/ledger/revenue` becomes readable, this file should be extended (add-only) with a new snapshot and endpoint-level breakdown plus explicit settlement-failure counts.
+- If `/ledger/revenue` becomes readable, extend future snapshots (add-only) by filling endpoint-level breakdown and settlement-failure counts from that source while keeping period totals issue-derived.
 - Unique-wallet count for trailing 30d is from these eight payer addresses in included issues: `0xc533bf52…`, `0x9138fea6…`, `0xc59e74ed…`, `0x644678ad…`, `0xc22c17fc…`, `0x54e163e9…`, `0x6777e11f…`, `0x7ef12be6…`.
 
 ## Reproducible retrieval steps
@@ -39,7 +39,7 @@ jq -r '.[] | [.number, .created_at, .title] | @tsv' /tmp/sale_issues.json
 
 Then:
 
-1. For future snapshots, determine period membership from settlement time: use the BaseScan timestamp for each tx hash in the issue body (preferred). This 2026-09-16 snapshot used `created_at` fallback. If a tx timestamp cannot be read, fallback to `created_at` and mark that period cell as `trailing Nd (approx)`.
+1. Determine period membership from issue `created_at` to keep snapshots comparable.
 2. Read `Amount` and `From` fields from each issue body.
 3. Sum amounts for `gross USDC`, count distinct `From` wallets for `unique paying wallets`.
 4. If settlement-failure or endpoint-attribution fields are absent in public issue bodies, report `unknown`.
