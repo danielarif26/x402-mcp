@@ -2,7 +2,7 @@
 
 As of 2026-09-16 UTC, this ledger is seeded from public `sale` issues only because live `/ledger/revenue` was not readable from this environment at authoring time.
 
-Update rule: keep this table on one source per update. If `/ledger/revenue` is readable in a future update, restate both periods from `/ledger/revenue` for that update (do not mix issue-derived and ledger-derived totals within the same period row).
+Update rule (add-only): append a new dated snapshot section for each future update, and keep one source per snapshot (do not mix issue-derived and ledger-derived totals within the same period row).
 
 ## Summary table (publicly verifiable)
 
@@ -24,7 +24,7 @@ Update rule: keep this table on one source per update. If `/ledger/revenue` is r
   - [#501](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/501) — $1.5000 USDC, `0xc22c17fc…`, BaseScan tx `0xf0b4b4b442c17d5f8276347d3c8e14daf5d8266192313de182bc59d5beab4723`
   - [#526](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/526) — $0.0100 USDC, `0x7ef12be6…`, BaseScan tx `0x87811a9be488a36e8334e309672e9792cc0086afe10fe370c89a374ed41cda97`
 - The 2026-08-26 `0xc22c17fc…` `$0.01` payment transactions requested in the issue are included in the trailing-30d gross as part of the `$0.01 × 15` line item, via `sale` issues [#488](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/488), [#489](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/489), [#490](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/490), [#491](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/491), [#492](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/492), [#499](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/499), [#500](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/500), [#502](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/502), and [#503](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/503). The remaining six `$0.01` issues in that subtotal are [#480](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/480), [#481](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/481), [#484](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/484), [#522](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/522), [#523](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/523), and [#526](https://github.com/kwizzlesurp10-ctrl/x402-mcp/issues/526).
-- If `/ledger/revenue` becomes readable, this file should be extended (add-only) with endpoint-level breakdown and explicit settlement-failure counts.
+- If `/ledger/revenue` becomes readable, this file should be extended (add-only) with a new snapshot and endpoint-level breakdown plus explicit settlement-failure counts.
 - Unique-wallet count for trailing 30d is from these eight payer addresses in included issues: `0xc533bf52…`, `0x9138fea6…`, `0xc59e74ed…`, `0x644678ad…`, `0xc22c17fc…`, `0x54e163e9…`, `0x6777e11f…`, `0x7ef12be6…`.
 
 ## Calculation detail (30d window)
