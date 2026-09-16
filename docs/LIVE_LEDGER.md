@@ -6,6 +6,8 @@ Update rule (add-only): append a new dated snapshot section for each future upda
 
 ## Summary table (publicly verifiable)
 
+Period basis for this snapshot: issue `created_at` proxy (not exact on-chain settlement timestamp).
+
 | period | gross USDC to payTo (on-chain + sale-watch issues) | unique paying wallets | settlement failures if known | top paid endpoints if known |
 |---|---:|---:|---|---|
 | trailing 7d | 0.00 | 0 | unknown (no public failure log visible here) | unknown |
