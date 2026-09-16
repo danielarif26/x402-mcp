@@ -27,6 +27,22 @@ Update rule (add-only): append a new dated snapshot section for each future upda
 - If `/ledger/revenue` becomes readable, this file should be extended (add-only) with a new snapshot and endpoint-level breakdown plus explicit settlement-failure counts.
 - Unique-wallet count for trailing 30d is from these eight payer addresses in included issues: `0xc533bf52…`, `0x9138fea6…`, `0xc59e74ed…`, `0x644678ad…`, `0xc22c17fc…`, `0x54e163e9…`, `0x6777e11f…`, `0x7ef12be6…`.
 
+## Reproducible retrieval steps
+
+Use public issue data only (no wallet spend required):
+
+```bash
+curl -s "https://api.github.com/repos/kwizzlesurp10-ctrl/x402-mcp/issues?state=all&labels=sale&per_page=100" > /tmp/sale_issues.json
+jq -r '.[] | [.number, .created_at, .title] | @tsv' /tmp/sale_issues.json
+```
+
+Then:
+
+1. Keep only issues with `created_at` inside the trailing period window.
+2. Read `Amount` and `From` fields from each issue body.
+3. Sum amounts for `gross USDC`, count distinct `From` wallets for `unique paying wallets`.
+4. If settlement-failure or endpoint-attribution fields are absent in public issue bodies, report `unknown`.
+
 ## Calculation detail (30d window)
 
 Included issues in 30d window: #480, #481, #483, #484, #488, #489, #490, #491, #492, #499, #500, #501, #502, #503, #522, #523, #525, #526.
