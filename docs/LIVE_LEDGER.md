@@ -47,6 +47,15 @@ done
 jq -r '.[] | [.number, .created_at, .title, .body] | @tsv' sale_issues_page_*.json
 ```
 
+```powershell
+for ($p = 1; $p -le 20; $p++) {
+  $out = "sale_issues_page_$p.json"
+  Invoke-WebRequest -UseBasicParsing "https://api.github.com/repos/kwizzlesurp10-ctrl/x402-mcp/issues?state=all&labels=sale&per_page=100&page=$p" | Select-Object -ExpandProperty Content | Set-Content $out
+  if ((Get-Content $out | ConvertFrom-Json).Count -eq 0) { Remove-Item $out; break }
+}
+jq -r '.[] | [.number, .created_at, .title, .body] | @tsv' sale_issues_page_*.json
+```
+
 Then:
 
 1. Determine period membership from issue `created_at` to keep snapshots comparable.
