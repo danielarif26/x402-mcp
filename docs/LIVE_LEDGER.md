@@ -1,6 +1,6 @@
-# LIVE_LEDGER
+# LIVE_LEDGER (observational sale snapshot)
 
-As of 2026-09-16 UTC, this ledger is seeded from public `sale` issues only because live `/ledger/revenue` was not readable from this environment at authoring time. Snapshot windowing in this file uses issue `created_at` for period membership.
+As of 2026-09-16 UTC, this snapshot is seeded from public `sale` issues only because live `/ledger/revenue` was not readable from this environment at authoring time. Snapshot windowing in this file uses issue `created_at` for period membership.
 
 **Caveat:** this is a public sale-issue snapshot, not canonical settled-ledger accounting. These rows are observational only and must never be used as revenue accounting or as a substitute for settled `/ledger/revenue` data.
 
@@ -39,8 +39,8 @@ Important: these are issue-created windows, not settlement-window ledger snapsho
 Use public issue data only (no wallet spend required):
 
 ```bash
-curl -s "https://api.github.com/repos/kwizzlesurp10-ctrl/x402-mcp/issues?state=all&labels=sale&per_page=100" > /tmp/sale_issues.json
-jq -r '.[] | [.number, .created_at, .title, .body] | @tsv' /tmp/sale_issues.json
+curl -s "https://api.github.com/repos/kwizzlesurp10-ctrl/x402-mcp/issues?state=all&labels=sale&per_page=100" > sale_issues.json
+jq -r '.[] | [.number, .created_at, .title, .body] | @tsv' sale_issues.json
 ```
 
 Then:
