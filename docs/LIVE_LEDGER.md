@@ -4,7 +4,9 @@ As of 2026-09-16 UTC, this ledger is seeded from public `sale` issues only becau
 
 Update rule (add-only): append a new dated snapshot section for each future update, and keep one source per snapshot (do not mix issue-derived and ledger-derived totals within the same period row). Historical snapshots stay frozen (never recompute an older snapshot from a different source).
 
-## Summary table (issue-created windows, publicly verifiable)
+## Snapshot — 2026-09-16 UTC
+
+### Summary table (issue-created windows, publicly verifiable)
 
 Important: these are issue-created windows, not settlement-window ledger snapshots.
 
