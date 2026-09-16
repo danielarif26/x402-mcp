@@ -2,6 +2,8 @@
 
 As of 2026-09-16 UTC, this ledger is seeded from public `sale` issues only because live `/ledger/revenue` was not readable from this environment at authoring time. Snapshot windowing in this file uses issue `created_at` for period membership.
 
+**Caveat:** this is a public sale-issue snapshot, not canonical settled-ledger accounting. Do not compare these rows directly to `/ledger/revenue` totals.
+
 Update rule (add-only): append a new dated snapshot section for each future update, and keep one source per snapshot (do not mix issue-derived and ledger-derived totals within the same period row). Historical snapshots stay frozen (never recompute an older snapshot from a different source).
 
 ## Snapshot — 2026-09-16 UTC
