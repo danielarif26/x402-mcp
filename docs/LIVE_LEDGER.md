@@ -1,8 +1,8 @@
 # LIVE_LEDGER
 
-As of 2026-09-16 UTC, this ledger is seeded from public `sale` issues only because live `/ledger/revenue` was not readable from this environment at authoring time.
+As of 2026-09-16 UTC, this ledger is seeded from public `sale` issues only because live `/ledger/revenue` was not readable from this environment at authoring time. This snapshot uses issue `created_at` as a period proxy because BaseScan timestamps were not machine-read in this environment.
 
-Update rule (add-only): append a new dated snapshot section for each future update, and keep one source per snapshot (do not mix issue-derived and ledger-derived totals within the same period row).
+Update rule (add-only): append a new dated snapshot section for each future update, and keep one source per snapshot (do not mix issue-derived and ledger-derived totals within the same period row). Historical snapshots stay frozen (never recompute an older snapshot from a different source).
 
 ## Summary table (publicly verifiable)
 
@@ -38,7 +38,7 @@ jq -r '.[] | [.number, .created_at, .title] | @tsv' /tmp/sale_issues.json
 
 Then:
 
-1. Keep only issues with `created_at` inside the trailing period window.
+1. Determine period membership from settlement time: use the BaseScan timestamp for each tx hash in the issue body (preferred). If a tx timestamp cannot be read, fallback to `created_at` and annotate that row as approximate.
 2. Read `Amount` and `From` fields from each issue body.
 3. Sum amounts for `gross USDC`, count distinct `From` wallets for `unique paying wallets`.
 4. If settlement-failure or endpoint-attribution fields are absent in public issue bodies, report `unknown`.
