@@ -3,7 +3,7 @@
 As of 2026-09-16 UTC, this snapshot is seeded from public `sale` issues only because live `/ledger/revenue` was not readable from this environment at authoring time. Snapshot windowing in this file uses issue `created_at` for period membership.
 
 **Caveat:** this is a public sale-issue snapshot, not canonical settled-ledger accounting. These rows are observational only and must never be used as revenue accounting or as a substitute for settled `/ledger/revenue` data.
-Canonical settled source: `GET /ledger/revenue` on the live server. Product reporting context: `/home/runner/work/x402-mcp/x402-mcp/docs/PRODUCT-FOCUS.md`.
+Canonical settled source: `GET /ledger/revenue` on the live server. Product reporting context: `docs/PRODUCT-FOCUS.md`.
 
 Update rule (add-only): append a new dated snapshot section for each future update, and keep one source per snapshot (do not mix issue-derived and ledger-derived totals within the same period row). Historical snapshots stay frozen (never recompute an older snapshot from a different source).
 
