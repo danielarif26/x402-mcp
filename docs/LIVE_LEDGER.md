@@ -38,7 +38,7 @@ jq -r '.[] | [.number, .created_at, .title] | @tsv' /tmp/sale_issues.json
 
 Then:
 
-1. Determine period membership from settlement time: use the BaseScan timestamp for each tx hash in the issue body (preferred). If a tx timestamp cannot be read, fallback to `created_at` and annotate that row as approximate.
+1. For future snapshots, determine period membership from settlement time: use the BaseScan timestamp for each tx hash in the issue body (preferred). This 2026-09-16 snapshot used `created_at` fallback. If a tx timestamp cannot be read, fallback to `created_at` and annotate that row as approximate.
 2. Read `Amount` and `From` fields from each issue body.
 3. Sum amounts for `gross USDC`, count distinct `From` wallets for `unique paying wallets`.
 4. If settlement-failure or endpoint-attribution fields are absent in public issue bodies, report `unknown`.
